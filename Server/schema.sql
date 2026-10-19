@@ -1,0 +1,20 @@
+CREATE DATABASE IF NOT EXISTS vyapar_db;
+USE vyapar_db;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  phone VARCHAR(20) NOT NULL,
+  shop_name VARCHAR(255) NOT NULL,
+  gst VARCHAR(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_users_phone (phone)
+);
+
+CREATE TABLE IF NOT EXISTS app_store (
+  user_id INT UNSIGNED NOT NULL,
+  data JSON NOT NULL,
+  PRIMARY KEY (user_id),
+  CONSTRAINT fk_app_store_user
+    FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+);
